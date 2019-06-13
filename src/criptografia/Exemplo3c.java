@@ -23,21 +23,20 @@ public class Exemplo3c {
 
     public static void main(String[] args) throws IOException {
 
-        FileInputStream arq = new FileInputStream("C:\\Users\\ld_si\\OneDrive\\Documentos\\NetBeansProjects\\Criptografia\\src\\criptografia\\texto.txt");
-        DataInputStream lerArq = new DataInputStream(arq);
-        FileOutputStream arqOutC = new FileOutputStream("C:\\Users\\ld_si\\OneDrive\\Documentos\\NetBeansProjects\\Criptografia\\src\\criptografia\\texto_c.txt");
-        FileOutputStream arqOutD = new FileOutputStream("C:\\Users\\ld_si\\OneDrive\\Documentos\\NetBeansProjects\\Criptografia\\src\\criptografia\\texto_d.txt");
+        
+        FileOutputStream arqOutC = new FileOutputStream("C:\\Users\\Aluno\\Desktop\\testeC.txt");
+        FileOutputStream arqOutD = new FileOutputStream("C:\\Users\\Aluno\\Desktop\\testeD.txt");
         DataOutputStream gravarArqC = new DataOutputStream(arqOutC);
         DataOutputStream gravarArqD = new DataOutputStream(arqOutD);
-        File file = new File("C:\\Users\\ld_si\\OneDrive\\Documentos\\NetBeansProjects\\Criptografia\\src\\criptografia\\texto.txt");
-        File cfile = new File("C:\\Users\\ld_si\\OneDrive\\Documentos\\NetBeansProjects\\Criptografia\\src\\criptografia\\texto_c.txt");
+        File file = new File("C:\\Users\\Aluno\\Desktop\\teste.txt");
+        File cfile = new File("C:\\Users\\Aluno\\Desktop\\testeC.txt");
         SecretKey key = Criptografia.simetricKey();
 
         gravarArqC.write(Criptografia.simetricCript(getBytes(file), key));
 
         gravarArqD.write(Criptografia.simetricDecript(getBytes(cfile), key));
 
-        arq.close();
+
     }
 
     public static byte[] getBytes(File file) {

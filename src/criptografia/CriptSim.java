@@ -33,11 +33,12 @@ public class CriptSim {
             SecretKey chaveDES = keygenerator.generateKey();
             return chaveDES;
         } catch (NoSuchAlgorithmException ex) {
+            System.out.println("key error"+ex.getMessage());
             return null;
         }
     }
    
-    public static byte[] getBytes(File file) {
+    private static byte[] getBytes(File file) {
         int len = (int) file.length();
         byte[] sendBuf = new byte[len];
         FileInputStream inFile = null;
@@ -66,8 +67,7 @@ public class CriptSim {
             // Inicializa a cifra para o processo de encriptação
             cifraDES.init(Cipher.ENCRYPT_MODE, chaveDES);
 
-            // Texto puro
-           //byte[] txtPuro = "Exemplo de texto puro".getBytes();
+          
 
             byte[] byteFile = getBytes(file);
             // Texto encriptado
@@ -92,7 +92,7 @@ public class CriptSim {
         
     }
     
-     public static void simetricDecript(File file, byte[] txtPuro, SecretKey chaveDES, String dest) {
+     public static void simetricDecript(File file, SecretKey chaveDES, String dest) {
 
         try {
 
@@ -100,22 +100,32 @@ public class CriptSim {
 
             Cipher cifraDES;
 
-            // Cria a cifra 
+         
             cifraDES = Cipher.getInstance("DES/ECB/PKCS5Padding");
 
             // Inicializa a cifra também para o processo de decriptação
             cifraDES.init(Cipher.DECRYPT_MODE, chaveDES);
-
-            // Decriptografa o texto
-            byte[] textoDecriptografado = cifraDES.doFinal(txtPuro);
             
-
-
+            byte[] byteFile = getBytes(file);
+            // Decriptografa o texto
+            byte[] resultFile = cifraDES.doFinal(byteFile);
+            
+            FileOutputStream arqOutD = new FileOutputStream(dest);
+            DataOutputStream gravarArqD = new DataOutputStream(arqOutD);
+            gravarArqD.write(resultFile);
+            
+            arqOutD.close();
+            gravarArqD.close();
+            
 
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
             System.out.println("Erro drecipt");
 
-        }
+        } catch (FileNotFoundException ex) {
+          
+       } catch (IOException ex) {
+           
+       }
 
     }  
 }

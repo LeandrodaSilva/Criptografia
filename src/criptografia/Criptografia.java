@@ -82,7 +82,7 @@ public class Criptografia {
 
             // Decriptografa o texto
             byte[] textoDecriptografado = cifraDES.doFinal(txtPuro);
-            
+            System.out.println(textoDecriptografado.toString());
             return textoDecriptografado;
 
 
